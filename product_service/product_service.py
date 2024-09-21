@@ -5,5 +5,6 @@ product_service = Blueprint('product_service', __name__, template_folder='templa
 
 @product_service.route('/')
 def index():
+    db = sqlite3.connect("product_service.sql")
     
     return "Página product_service"
