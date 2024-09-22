@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
-from order_service.order_service import order_service
-from product_service.product_service import product_service
-from user_service.user_service import user_service
+from order_service.app import order_service
+from product_service.app import product_service
+from user_service.app import user_service
 
 import sqlite3
 
