@@ -1,8 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,Blueprint
 import sqlite3
 import requests
 
-app = Flask(__name__)
+order_service = Blueprint("order_service",__name__)
 
 def init_db():
     # Função para inicializar o banco de dados e criar a tabela 'orders' se não existir
@@ -19,7 +19,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-@app.route('/orders', methods=['POST'])
+@order_service.route('/', methods=['POST'])
 def create_order():
     order_data = request.get_json()
     
@@ -56,7 +56,7 @@ def create_order():
     
     return jsonify(order), 201  # Retorna o pedido criado e status 201
 
-@app.route('/orders', methods=['GET'])
+@order_service.route('/', methods=['GET'])
 def get_orders():
     # Conexão com o banco de dados de pedidos
     conn = sqlite3.connect('orders.db')
@@ -70,6 +70,7 @@ def get_orders():
     
     return jsonify(orders_list)
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     init_db()
     app.run(port=5003)  # Executa a aplicação Flask na porta 5003
+'''

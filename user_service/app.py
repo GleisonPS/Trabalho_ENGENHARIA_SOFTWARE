@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,Blueprint
 import sqlite3
 
-app = Flask(__name__)
+user_service = Blueprint("user_service",__name__)
 
 def init_db():
     # Função para inicializar o banco de dados e criar a tabela 'users' se não existir
@@ -11,7 +11,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-@app.route('/users', methods=['GET'])
+@user_service.route('/', methods=['GET'])
 def get_users():
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
@@ -20,7 +20,7 @@ def get_users():
     conn.close()
     return jsonify(users) # Retorna os usuários em formato JSON
 
-@app.route('/users', methods=['POST'])
+@user_service.route('/', methods=['POST'])
 def add_user():
     # Obtém os dados do novo usuário da requisição JSON
     novo_user = request.get_json()
@@ -31,7 +31,4 @@ def add_user():
     conn.close()
     return jsonify(novo_user), 201 # Retorna os dados do novo usuário em formato JSON e status 201 (Criado)
 
-if __name__ == '__main__':
-    init_db()
-    app.run(port=5001) # Executa a aplicação Flask na porta 5001
 
