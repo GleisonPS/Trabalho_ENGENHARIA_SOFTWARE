@@ -55,7 +55,7 @@ def create_order():
     }
     
     return jsonify(order), 201  # Retorna o pedido criado e status 201
-
+#teste
 @app.route('/orders', methods=['GET'])
 def get_orders():
     # Conexão com o banco de dados de pedidos
